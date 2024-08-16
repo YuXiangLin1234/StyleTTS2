@@ -51,7 +51,7 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
 def process_tsv(input_tsvs, output_file):
 	"""Process the TSV file and generate the output file in the specified format."""
 
-	global_phonemizer = phonemizer.backend.EspeakBackend(language='cmn', preserve_punctuation=True, with_stress=True, words_mismatch='ignore')
+	# global_phonemizer = phonemizer.backend.EspeakBackend(language='cmn', preserve_punctuation=True, with_stress=True, words_mismatch='ignore')
 	with open(output_file, 'w', encoding='utf-8') as f_out:
 		
 		for input_tsv in input_tsvs:
@@ -71,7 +71,7 @@ def process_tsv(input_tsvs, output_file):
 				print(simplified_sentence)
 				# try:
 				# Convert the sentence to phonemes
-				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
+				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer=None)
 				
 				# Write to output file in the format: filename.wav|phoneme|speaker
 				print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
