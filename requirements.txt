@@ -19,4 +19,5 @@ tensorboard
 phonemizer
 hanziconv
 pinyin-to-ipa
+pinyin
 git+https://github.com/resemble-ai/monotonic_align.git
