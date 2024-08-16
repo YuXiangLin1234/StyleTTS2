@@ -5,6 +5,7 @@ import phonemizer
 from pinyin_to_ipa import pinyin_to_ipa
 import pinyin as chinese_to_pinyin
 import string
+import dragonmapper
 
 def remove_punctuation(text):
     # Define English punctuation and Chinese punctuation
@@ -39,10 +40,12 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
     # )
     # phonemes =  ''.join(global_phonemizer.phonemize([text]))
     # phonemes = phonemes.strip()
-    pinyin = ''.join(global_phonemizer.phonemize([text]))
-    pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
-    pinyin = pinyin.split("#")
-    phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
+    # pinyin = ''.join(global_phonemizer.phonemize([text]))
+    # pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
+    # pinyin = pinyin.split("#")
+    # phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
+    pinyin = dragonmapper.hanzi.to_pinyin(text)
+    phonemes = dragonmapper.transcriptions.pinyin_to_ipa(pinyin)
     return phonemes
 
 def process_tsv(input_tsvs, output_file):
