@@ -88,6 +88,10 @@ def process_tsv(input_tsvs, output_file):
 # output_file = 'train_list.txt'  # Output file path
 
 
+input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv"]  # Replace with your input TSV file path
+output_file = 'train_list.txt'  # Output file path
+
 input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/test.tsv"]  # Replace with your input TSV file path
 output_file = 'val_list.txt'  # Output file path
 process_tsv(input_tsvs, output_file)
