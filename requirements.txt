@@ -20,4 +20,5 @@ phonemizer
 hanziconv
 pinyin-to-ipa
 pinyin
+wandb
 git+https://github.com/resemble-ai/monotonic_align.git
