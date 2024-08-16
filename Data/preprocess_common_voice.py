@@ -44,7 +44,7 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
 	# pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
 	# pinyin = pinyin.split("#")
 	# phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
-	phonemes = dragonmapper.hanzi.toipa(text)
+	phonemes = dragonmapper.hanzi.to_ipa(text)
 	# phonemes = dragonmapper.transcriptions.pinyin_to_ipa(s)
 	return phonemes
 
