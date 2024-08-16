@@ -42,7 +42,7 @@ logger = get_logger(__name__, log_level="DEBUG")
 @click.option('-p', '--config_path', default='Configs/config.yml', type=str)
 def main(config_path):
     wandb.init()
-    
+
     config = yaml.safe_load(open(config_path))
 
     log_dir = config['log_dir']
@@ -321,12 +321,12 @@ def main(config_path):
                 writer.add_scalar('train/slm_loss', loss_slm, iters)
 
 
-                wandb.log({'train/mel_loss', running_loss / log_interval})
-                wandb.log({'train/gen_loss', loss_gen_all})
-                wandb.log({'train/d_loss', d_loss})
-                wandb.log({'train/mono_loss', loss_mono})
-                wandb.log({'train/s2s_loss', loss_s2s})
-                wandb.log({'train/slm_loss', loss_slm})
+                wandb.log({'train/mel_loss': running_loss / log_interval})
+                wandb.log({'train/gen_loss': loss_gen_all})
+                wandb.log({'train/d_loss': d_loss})
+                wandb.log({'train/mono_loss': loss_mono})
+                wandb.log({'train/s2s_loss': loss_s2s})
+                wandb.log({'train/slm_loss': loss_slm})
 
                 running_loss = 0
                 
