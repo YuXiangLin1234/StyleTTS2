@@ -4,11 +4,9 @@ from phonemizer import phonemize
 import phonemizer
 from pinyin_to_ipa import pinyin_to_ipa
 import pinyin as chinese_to_pinyin
-from zhconv import convert
 
 def traditional_to_simplified(traditional_text):
     """Convert Traditional Chinese to Simplified Chinese."""
-    simplified_text = convert(traditional_text)
     simplified_text = HanziConv.toSimplified(traditional_text)
     return simplified_text
 
