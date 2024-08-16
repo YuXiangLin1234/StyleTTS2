@@ -45,7 +45,7 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
     # pinyin = pinyin.split("#")
     # phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
     pinyin = dragonmapper.hanzi.to_pinyin(text)
-    phonemes = dragonmapper.transcriptions.pinyin_to_ipa(pinyin)
+	phonemes = dragonmapper.transcriptions.pinyin_to_ipa(s)
     return phonemes
 
 def process_tsv(input_tsvs, output_file):
@@ -69,15 +69,15 @@ def process_tsv(input_tsvs, output_file):
 				# Convert Traditional Chinese to Simplified Chinese (if needed)
 				simplified_sentence = traditional_to_simplified(sentence)
 				print(simplified_sentence)
-				try:
-					# Convert the sentence to phonemes
-					phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
-					
-					# Write to output file in the format: filename.wav|phoneme|speaker
-					print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
-					f_out.write(f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}|{phonemes}|{client_id}\n")
-				except:
-					continue
+				# try:
+				# Convert the sentence to phonemes
+				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
+				
+				# Write to output file in the format: filename.wav|phoneme|speaker
+				print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
+				f_out.write(f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}|{phonemes}|{client_id}\n")
+				# except:
+				# 	continue
 
 # Example usage
 input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
