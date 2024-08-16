@@ -28,25 +28,25 @@ def traditional_to_simplified(traditional_text):
 	return simplified_text
 
 def text_to_phonemes(text, global_phonemizer, language='cmn'):
-    """Convert Chinese text to phonemes using phonemizer."""
-    # phonemes = phonemize(
-    #     text,
-    #     language=language,
-    #     backend='espeak',
-    #     strip=True,  # Removes extra spaces
-    #     preserve_punctuation=True,
-    #     with_stress=True,  # Keep stress marks if available
-    #     language_switch='remove-flags'  # Handle multilingual text
-    # )
-    # phonemes =  ''.join(global_phonemizer.phonemize([text]))
-    # phonemes = phonemes.strip()
-    # pinyin = ''.join(global_phonemizer.phonemize([text]))
-    # pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
-    # pinyin = pinyin.split("#")
-    # phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
-    pinyin = dragonmapper.hanzi.to_pinyin(text)
+	"""Convert Chinese text to phonemes using phonemizer."""
+	# phonemes = phonemize(
+	#     text,
+	#     language=language,
+	#     backend='espeak',
+	#     strip=True,  # Removes extra spaces
+	#     preserve_punctuation=True,
+	#     with_stress=True,  # Keep stress marks if available
+	#     language_switch='remove-flags'  # Handle multilingual text
+	# )
+	# phonemes =  ''.join(global_phonemizer.phonemize([text]))
+	# phonemes = phonemes.strip()
+	# pinyin = ''.join(global_phonemizer.phonemize([text]))
+	# pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
+	# pinyin = pinyin.split("#")
+	# phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
+	pinyin = dragonmapper.hanzi.to_pinyin(text)
 	phonemes = dragonmapper.transcriptions.pinyin_to_ipa(s)
-    return phonemes
+	return phonemes
 
 def process_tsv(input_tsvs, output_file):
 	"""Process the TSV file and generate the output file in the specified format."""
