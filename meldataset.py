@@ -41,6 +41,7 @@ class TextCleaner:
             try:
                 indexes.append(self.word_index_dictionary[char])
             except KeyError:
+                print("error")
                 print(text)
         return indexes
 
