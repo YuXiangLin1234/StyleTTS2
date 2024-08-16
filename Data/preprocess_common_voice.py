@@ -7,7 +7,7 @@ def traditional_to_simplified(traditional_text):
     simplified_text = HanziConv.toSimplified(traditional_text)
     return simplified_text
 
-def text_to_phonemes(text, language='zh'):
+def text_to_phonemes(text, language='cmn'):
     """Convert Chinese text to phonemes using phonemizer."""
     phonemes = phonemize(
         text,
