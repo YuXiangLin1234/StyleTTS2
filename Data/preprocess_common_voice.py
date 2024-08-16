@@ -21,10 +21,10 @@ def remove_punctuation(text):
     return text.translate(translation_table)
 
 def traditional_to_simplified(traditional_text):
-    """Convert Traditional Chinese to Simplified Chinese."""
-    simplified_text = HanziConv.toSimplified(traditional_text)
+	"""Convert Traditional Chinese to Simplified Chinese."""
+	simplified_text = HanziConv.toSimplified(traditional_text)
 	simplified_text = remove_punctuation(simplified_text)
-    return simplified_text
+	return simplified_text
 
 def text_to_phonemes(text, global_phonemizer, language='cmn'):
     """Convert Chinese text to phonemes using phonemizer."""
