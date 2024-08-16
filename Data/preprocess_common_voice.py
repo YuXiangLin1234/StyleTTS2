@@ -4,10 +4,26 @@ from phonemizer import phonemize
 import phonemizer
 from pinyin_to_ipa import pinyin_to_ipa
 import pinyin as chinese_to_pinyin
+import string
+
+def remove_punctuation(text):
+    # Define English punctuation and Chinese punctuation
+    english_punctuation = string.punctuation
+    chinese_punctuation = '。，！？、；：“”‘’（）《》〈〉【】〔〕'
+
+    # Combine English and Chinese punctuation into one string
+    all_punctuation = english_punctuation + chinese_punctuation
+
+    # Create translation table for removing punctuation
+    translation_table = str.maketrans('', '', all_punctuation)
+
+    # Remove punctuation from the text
+    return text.translate(translation_table)
 
 def traditional_to_simplified(traditional_text):
     """Convert Traditional Chinese to Simplified Chinese."""
     simplified_text = HanziConv.toSimplified(traditional_text)
+	simplified_text = remove_punctuation(simplified_text)
     return simplified_text
 
 def text_to_phonemes(text, global_phonemizer, language='cmn'):
