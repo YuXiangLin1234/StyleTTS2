@@ -43,6 +43,7 @@ def process_tsv(input_tsvs, output_file):
 				phonemes = text_to_phonemes(simplified_sentence)
 				
 				# Write to output file in the format: filename.wav|phoneme|speaker
+				print(f"{filename}|{phonemes}|{client_id}\n")
 				f_out.write(f"{filename}|{phonemes}|{client_id}\n")
 
 # Example usage
