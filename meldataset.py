@@ -41,8 +41,9 @@ class TextCleaner:
             try:
                 indexes.append(self.word_index_dictionary[char])
             except KeyError:
-                print("error")
-                print(char , " | ", text)
+                continue
+                # print("error")
+                # print(char , " | ", text)
         return indexes
 
 np.random.seed(1)
