@@ -28,21 +28,21 @@ def traditional_to_simplified(traditional_text):
 
 def text_to_phonemes(text, global_phonemizer, language='cmn'):
     """Convert Chinese text to phonemes using phonemizer."""
-    phonemes = phonemize(
-        text,
-        language=language,
-        backend='espeak',
-        strip=True,  # Removes extra spaces
-        preserve_punctuation=True,
-        with_stress=True,  # Keep stress marks if available
-        language_switch='remove-flags'  # Handle multilingual text
-    )
-    phonemes =  ''.join(global_phonemizer.phonemize([text]))
-    phonemes = phonemes.strip()
-    # pinyin = ''.join(global_phonemizer.phonemize([text]))
-    # pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
-    # pinyin = pinyin.split("#")
-    # phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
+    # phonemes = phonemize(
+    #     text,
+    #     language=language,
+    #     backend='espeak',
+    #     strip=True,  # Removes extra spaces
+    #     preserve_punctuation=True,
+    #     with_stress=True,  # Keep stress marks if available
+    #     language_switch='remove-flags'  # Handle multilingual text
+    # )
+    # phonemes =  ''.join(global_phonemizer.phonemize([text]))
+    # phonemes = phonemes.strip()
+    pinyin = ''.join(global_phonemizer.phonemize([text]))
+    pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
+    pinyin = pinyin.split("#")
+    phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
     return phonemes
 
 def process_tsv(input_tsvs, output_file):
