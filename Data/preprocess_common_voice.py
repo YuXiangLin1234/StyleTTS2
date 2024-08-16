@@ -24,7 +24,7 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
     # pinyin = ''.join(global_phonemizer.phonemize([text]))
     pinyin = chinese_to_pinyin.get(text, format="numerical", delimiter="#")
     pinyin = pinyin.split("#")
-    phonemes = " ".join(["".join(list(pinyin_to_ipa(p))) for p in pinyin])
+    phonemes = " ".join(["".join(list(pinyin_to_ipa(p)[0])) for p in pinyin])
     return phonemes
 
 def process_tsv(input_tsvs, output_file):
