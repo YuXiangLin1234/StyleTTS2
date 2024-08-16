@@ -455,9 +455,9 @@ def main(config_path):
             
             running_loss += loss_mel.item()
             g_loss.backward()
-            if torch.isnan(g_loss):
-                from IPython.core.debugger import set_trace
-                set_trace()
+            # if torch.isnan(g_loss):
+            #     from IPython.core.debugger import set_trace
+            #     set_trace()
 
             optimizer.step('bert_encoder')
             optimizer.step('bert')

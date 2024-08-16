@@ -22,4 +22,5 @@ pinyin-to-ipa
 pinyin
 wandb
 dragonmapper
+IPython
 git+https://github.com/resemble-ai/monotonic_align.git
