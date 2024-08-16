@@ -31,7 +31,7 @@ preprocess_params:
     hop_length: 300
 
 model_params:
-  multispeaker: false
+  multispeaker: true
 
   dim_in: 64 
   hidden_dim: 512
@@ -58,10 +58,10 @@ model_params:
       
   # speech language model config
   slm:
-      model: 'microsoft/wavlm-base-plus'
+      model: 'facebook/wav2vec2-large-xlsr-53'
       sr: 16000 # sampling rate of SLM
-      hidden: 768 # hidden size of SLM
-      nlayers: 13 # number of layers of SLM
+      hidden: 1024 # hidden size of SLM
+      nlayers: 24 # number of layers of SLM
       initial_channel: 64 # initial channels of SLM discriminator head
   
   # style diffusion model config
