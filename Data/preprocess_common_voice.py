@@ -1,29 +1,33 @@
 import pandas as pd
 from hanziconv import HanziConv
 from phonemizer import phonemize
+import phonemizer
 
 def traditional_to_simplified(traditional_text):
     """Convert Traditional Chinese to Simplified Chinese."""
     simplified_text = HanziConv.toSimplified(traditional_text)
     return simplified_text
 
-def text_to_phonemes(text, language='cmn'):
+def text_to_phonemes(text, global_phonemizer, language='cmn'):
     """Convert Chinese text to phonemes using phonemizer."""
-    phonemes = phonemize(
-        text,
-        language=language,
-        backend='espeak',
-        strip=True,  # Removes extra spaces
-        preserve_punctuation=True,
-        with_stress=True,  # Keep stress marks if available
-        language_switch='remove-flags'  # Handle multilingual text
-    )
+    # phonemes = phonemize(
+    #     text,
+    #     language=language,
+    #     backend='espeak',
+    #     strip=True,  # Removes extra spaces
+    #     preserve_punctuation=True,
+    #     with_stress=True,  # Keep stress marks if available
+    #     language_switch='remove-flags'  # Handle multilingual text
+    # )
+    phonemes = ''.join(global_phonemizer.phonemize([text]))
+    phonemes = phonemes.strip()
+
     return phonemes
 
 def process_tsv(input_tsvs, output_file):
 	"""Process the TSV file and generate the output file in the specified format."""
 
-
+	global_phonemizer = phonemizer.backend.EspeakBackend(language='cmn', preserve_punctuation=True, with_stress=True, words_mismatch='ignore')
 	with open(output_file, 'w', encoding='utf-8') as f_out:
 		
 		for input_tsv in input_tsvs:
@@ -42,7 +46,7 @@ def process_tsv(input_tsvs, output_file):
 				simplified_sentence = traditional_to_simplified(sentence)
 				
 				# Convert the sentence to phonemes
-				phonemes = text_to_phonemes(simplified_sentence)
+				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
 				
 				# Write to output file in the format: filename.wav|phoneme|speaker
 				print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
