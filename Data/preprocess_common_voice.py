@@ -14,7 +14,9 @@ def text_to_phonemes(text, language='cmn'):
         language=language,
         backend='espeak',
         strip=True,  # Removes extra spaces
-        preserve_punctuation=True
+        preserve_punctuation=True,
+        with_stress=True,  # Keep stress marks if available
+        language_switch='remove-flags'  # Handle multilingual text
     )
     return phonemes
 
@@ -43,8 +45,8 @@ def process_tsv(input_tsvs, output_file):
 				phonemes = text_to_phonemes(simplified_sentence)
 				
 				# Write to output file in the format: filename.wav|phoneme|speaker
-				print(f"{filename}|{phonemes}|{client_id}\n")
-				f_out.write(f"{filename}|{phonemes}|{client_id}\n")
+				print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
+				f_out.write(f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}|{phonemes}|{client_id}\n")
 
 # Example usage
 input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
