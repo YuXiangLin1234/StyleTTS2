@@ -2,6 +2,7 @@ import pandas as pd
 from hanziconv import HanziConv
 from phonemizer import phonemize
 import phonemizer
+from pinyin_to_ipa import pinyin_to_ipa
 
 def traditional_to_simplified(traditional_text):
     """Convert Traditional Chinese to Simplified Chinese."""
@@ -19,9 +20,9 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
     #     with_stress=True,  # Keep stress marks if available
     #     language_switch='remove-flags'  # Handle multilingual text
     # )
-    phonemes = ''.join(global_phonemizer.phonemize([text]))
-    phonemes = phonemes.strip()
-
+    pinyin = ''.join(global_phonemizer.phonemize([text]))
+    pinyin = pinyin.strip()
+    phonemes = pinyin_to_ipa(pinyin)
     return phonemes
 
 def process_tsv(input_tsvs, output_file):
@@ -44,6 +45,7 @@ def process_tsv(input_tsvs, output_file):
 				
 				# Convert Traditional Chinese to Simplified Chinese (if needed)
 				simplified_sentence = traditional_to_simplified(sentence)
+				print(simplified_sentence)
 				
 				# Convert the sentence to phonemes
 				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
