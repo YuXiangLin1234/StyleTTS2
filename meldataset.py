@@ -24,6 +24,8 @@ _pad = "$"
 _punctuation = ';:,.!?¡¿—…"«»“” '
 _letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 _letters_ipa = "ɑɐɒæɓʙβɔɕçɗɖðʤəɘɚɛɜɝɞɟʄɡɠɢʛɦɧħɥʜɨɪʝɭɬɫɮʟɱɯɰŋɳɲɴøɵɸθœɶʘɹɺɾɻʀʁɽʂʃʈʧʉʊʋⱱʌɣɤʍχʎʏʑʐʒʔʡʕʢǀǁǂǃˈˌːˑʼʴʰʱʲʷˠˤ˞↓↑→↗↘'̩'ᵻ"
+_chinese_punctuation = "，。！（）、「」"
+_vowels = "˧˩˧˥˩˥˧"
 
 # Export all symbols:
 symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa)
@@ -43,7 +45,7 @@ class TextCleaner:
             except KeyError:
                 continue
                 # print("error")
-                # print(char , " | ", text)
+                print(char , " | ", text)
         return indexes
 
 np.random.seed(1)

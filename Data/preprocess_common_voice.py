@@ -24,7 +24,8 @@ def remove_punctuation(text):
 def traditional_to_simplified(traditional_text):
 	"""Convert Traditional Chinese to Simplified Chinese."""
 	simplified_text = HanziConv.toSimplified(traditional_text)
-	simplified_text = remove_punctuation(simplified_text)
+	# simplified_text = remove_punctuation(simplified_text)
+	# simplified_text = simplified_text.replace("，", ",").replace("、", ",").replace("。", ".").replace("？", "?").replace("！", "!").replace("：", ":").replace("；", ";")
 	return simplified_text
 
 def text_to_phonemes(text, global_phonemizer, language='cmn'):
@@ -56,7 +57,7 @@ def process_tsv(input_tsvs, output_file):
 		
 		for input_tsv in input_tsvs:
 			df = pd.read_csv(input_tsv, sep='\t')
-
+			
 			# Create a mapping from client_id (original) to a unique integer starting from 3000
 			unique_clients = df['client_id'].unique()
 			client_id_map = {client: idx + 3000 for idx, client in enumerate(unique_clients)}
@@ -64,6 +65,11 @@ def process_tsv(input_tsvs, output_file):
 				# Extract the necessary columns
 				filename = row['path']
 				sentence = row['sentence']
+
+				if "other" in input_tsv or "validated" in input_tsv:
+					if len(sentence) < 15:
+						continue
+
 				client_id = client_id_map[row['client_id']]
 				
 				# Convert Traditional Chinese to Simplified Chinese (if needed)
@@ -80,16 +86,16 @@ def process_tsv(input_tsvs, output_file):
 				# 	continue
 
 # Example usage
-# input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
-#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv",
-# 			  "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/invalidated.tsv",
-#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/other.tsv",
-#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/validated.tsv"]  # Replace with your input TSV file path
-# output_file = 'train_list.txt'  # Output file path
+input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv",
+			  "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/invalidated.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/other.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/validated.tsv"]  # Replace with your input TSV file path
+output_file = 'train_list.txt'  # Output file path
 
 
 # input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
-#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv"]  # Replace with your input TSV file path
+            #   "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv"]  # Replace with your input TSV file path
 # output_file = 'train_list.txt'  # Output file path
 
 input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/test.tsv"]  # Replace with your input TSV file path
