@@ -54,13 +54,21 @@ def process_tsv(input_tsvs, output_file):
 
 	# global_phonemizer = phonemizer.backend.EspeakBackend(language='cmn', preserve_punctuation=True, with_stress=True, words_mismatch='ignore')
 	with open(output_file, 'w', encoding='utf-8') as f_out:
-		
+
+		unique_clients = set()
+		for input_tsv in input_tsvs:
+			df = pd.read_csv(input_tsv, sep='\t')
+			unique_client = df['client_id'].unique()
+			unique_clients.update(unique_client)
+			
+		unique_clients = list(unique_clients)
+		client_id_map = {client: idx + 3000 for idx, client in enumerate(unique_clients)}
+
 		for input_tsv in input_tsvs:
 			df = pd.read_csv(input_tsv, sep='\t')
 			
 			# Create a mapping from client_id (original) to a unique integer starting from 3000
-			unique_clients = df['client_id'].unique()
-			client_id_map = {client: idx + 3000 for idx, client in enumerate(unique_clients)}
+
 			for _, row in df.iterrows():
 				# Extract the necessary columns
 				filename = row['path']
