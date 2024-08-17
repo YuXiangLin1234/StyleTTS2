@@ -703,15 +703,15 @@ def load_checkpoint(model, optimizer, path, load_only_params=True, ignore_module
                 model[key].load_state_dict(params[key], strict=False)
                 
             except:
-                print(params[key])
+                print(params[key].keys())
                 print(len(params[key]))
                 print(len(params[key][0]))
                 # new_weights = torch.empty((134, 128))
                 # nn.init.xavier_uniform_(new_weights)
                 # new_weights = torch.zeros(params[key].shape)
                 # new_weights[:178] = 
-                model
-    exit()
+                # model
+    exit()[[]]
     _ = [model[key].eval() for key in model]
     
     if not load_only_params:
