@@ -23,4 +23,5 @@ pinyin
 wandb
 dragonmapper
 IPython
+pydub
 git+https://github.com/resemble-ai/monotonic_align.git
