@@ -92,6 +92,7 @@ input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/other.tsv",
               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/validated.tsv"]  # Replace with your input TSV file path
 output_file = 'train_list.txt'  # Output file path
+process_tsv(input_tsvs, output_file)
 
 
 # input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
