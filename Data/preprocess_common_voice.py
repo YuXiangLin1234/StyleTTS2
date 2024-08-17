@@ -82,7 +82,6 @@ def process_tsv(input_tsvs, output_file):
 				
 				# Convert Traditional Chinese to Simplified Chinese (if needed)
 				simplified_sentence = traditional_to_simplified(sentence)
-				print(simplified_sentence)
 				# try:
 				# Convert the sentence to phonemes
 				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer=None)

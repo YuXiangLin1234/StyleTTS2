@@ -79,6 +79,7 @@ def process_tsv(input_tsvs, output_file):
 				# if "other" in input_tsv or "validated" in input_tsv:
 				audio = AudioSegment.from_file(filename)
 				duration_in_seconds = len(audio) / 1000.0
+				print(duration_in_seconds)
 				if duration_in_seconds < 8:
 					continue
 
@@ -86,7 +87,6 @@ def process_tsv(input_tsvs, output_file):
 				
 				# Convert Traditional Chinese to Simplified Chinese (if needed)
 				simplified_sentence = traditional_to_simplified(sentence)
-				print(simplified_sentence)
 				# try:
 				# Convert the sentence to phonemes
 				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer=None)
