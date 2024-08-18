@@ -284,8 +284,9 @@ class LayerNorm(nn.Module):
 class TextEncoder(nn.Module):
     def __init__(self, channels, kernel_size, depth, n_symbols, actv=nn.LeakyReLU(0.2)):
         super().__init__()
+        print("n_symbols", n_symbols)
         self.embedding = nn.Embedding(n_symbols, channels)
-
+        
         padding = (kernel_size - 1) // 2
         self.cnn = nn.ModuleList()
         for _ in range(depth):
