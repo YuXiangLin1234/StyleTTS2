@@ -28,7 +28,7 @@ _chinese_punctuation = "，。！（）、「」"
 _vowels = "˧˩˧˥˩˥˧"
 
 # Export all symbols:
-symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa)
+symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa) + list(_chinese_punctuation) + list(_vowels)
 
 dicts = {}
 for i in range(len((symbols))):
