@@ -15,10 +15,10 @@ ASR_path: "Utils/ASR/epoch_00080.pth"
 PLBERT_dir: 'Utils/PLBERT/'
 
 data_params:
-  train_data: "Data/train_starrail_pinyin.tsv"
-  val_data: "Data/test_starrail_pinyin.tsv"
+  train_data: "Data/train_starrail_pinyin.txt"
+  val_data: "Data/test_starrail_pinyin.txt"
   root_path: ""
-  OOD_data: "Data/test_starrail_pinyin.tsv"
+  OOD_data: "Data/test_starrail_pinyin.txt"
   min_length: 50 # sample until texts with this size are obtained for OOD texts
 
 preprocess_params:
