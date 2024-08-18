@@ -18,7 +18,7 @@ data_params:
   train_data: "Data/train_starrail.tsv"
   val_data: "Data/test_starrail.tsv"
   root_path: ""
-  OOD_data: "Data/OOD_texts.txt"
+  OOD_data: "Data/test_starrail.tsv"
   min_length: 50 # sample until texts with this size are obtained for OOD texts
 
 preprocess_params:
