@@ -24,11 +24,12 @@ _pad = "$"
 _punctuation = ';:,.!?¡¿—…"«»“” '
 _letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 _letters_ipa = "ɑɐɒæɓʙβɔɕçɗɖðʤəɘɚɛɜɝɞɟʄɡɠɢʛɦɧħɥʜɨɪʝɭɬɫɮʟɱɯɰŋɳɲɴøɵɸθœɶʘɹɺɾɻʀʁɽʂʃʈʧʉʊʋⱱʌɣɤʍχʎʏʑʐʒʔʡʕʢǀǁǂǃˈˌːˑʼʴʰʱʲʷˠˤ˞↓↑→↗↘'̩'ᵻ"
-# _chinese_punctuation = "，。！（）、「」"
+_tones = "12345"
+_chinese_punctuation = "，。！（）、「」"
 # _vowels = "˧˩˧˥˩˥˧"
 
 # Export all symbols:
-symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa) 
+symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa) + list(_tones) + list(_chinese_punctuation)
 # list(_chinese_punctuation) + list(_vowels)
 
 dicts = {}
@@ -44,7 +45,7 @@ class TextCleaner:
             try:
                 indexes.append(self.word_index_dictionary[char])
             except KeyError:
-                continue
+                # continue
                 # print("error")
                 print(char , " | ", text)
         return indexes
