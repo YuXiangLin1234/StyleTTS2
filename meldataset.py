@@ -21,15 +21,17 @@ logger.setLevel(logging.DEBUG)
 import pandas as pd
 
 _pad = "$"
-_punctuation = ';:,.!?¡¿—…"«»“” '
+# _punctuation = ';:,.!?¡¿—…"«»“” '
+_punctuation = ';:,12345—…、，。！？ '
 _letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 _letters_ipa = "ɑɐɒæɓʙβɔɕçɗɖðʤəɘɚɛɜɝɞɟʄɡɠɢʛɦɧħɥʜɨɪʝɭɬɫɮʟɱɯɰŋɳɲɴøɵɸθœɶʘɹɺɾɻʀʁɽʂʃʈʧʉʊʋⱱʌɣɤʍχʎʏʑʐʒʔʡʕʢǀǁǂǃˈˌːˑʼʴʰʱʲʷˠˤ˞↓↑→↗↘'̩'ᵻ"
-_tones = "12345"
-_chinese_punctuation = "，。！（）、「」"
+# _tones = "12345"
+# _chinese_punctuation = "，。！？（）、「」：；"
 # _vowels = "˧˩˧˥˩˥˧"
 
 # Export all symbols:
-symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa) + list(_tones) + list(_chinese_punctuation)
+symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa) 
+# + list(_tones) + list(_chinese_punctuation)
 # list(_chinese_punctuation) + list(_vowels)
 
 dicts = {}
@@ -47,7 +49,7 @@ class TextCleaner:
             except KeyError:
                 # continue
                 # print("error")
-                print(char , " | ", text)
+                # print(char , " | ", text)
         return indexes
 
 np.random.seed(1)
