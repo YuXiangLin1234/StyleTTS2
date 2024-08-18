@@ -25,4 +25,5 @@ dragonmapper
 IPython
 pydub
 datasets
+pypinyin
 git+https://github.com/resemble-ai/monotonic_align.git
