@@ -51,12 +51,6 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
 	return phonemes
 
 
-
-
-
-
-
-
 # Common_voice in not enough longer
 # def process_tsv(input_tsvs, output_file):
 # 	"""Process the TSV file and generate the output file in the specified format."""
@@ -147,7 +141,6 @@ print("dataset length", len(dataset))
 unique_speakers = set(dataset['train']['speaker'])
 unique_speakers = list(unique_speakers)
 
-
 # Split the dataset into train and test sets (90% train, 10% test)
 train_test_split = dataset['train'].train_test_split(test_size=0.1)
 dataset = DatasetDict({
@@ -163,7 +156,6 @@ os.makedirs("/workspace/backup/starrail", exist_ok=True)
 # Prepare the metadata file
 train_metadata_path = os.path.join(output_dir, "train_starrail.tsv")
 test_metadata_path = os.path.join(output_dir, "test_starrail.tsv")
-
 
 def save_audio_and_metadata(dataset_split, metadata_path):
 	with open(metadata_path, 'w', encoding='utf-8') as f:
@@ -182,4 +174,7 @@ def save_audio_and_metadata(dataset_split, metadata_path):
 			speaker_id = unique_speakers.index(speaker) + 3000
 
 			f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
+
+save_audio_and_metadata(dataset['train'], train_metadata_path)
+save_audio_and_metadata(dataset['test'], test_metadata_path)
 

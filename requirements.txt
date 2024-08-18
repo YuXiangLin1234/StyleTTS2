@@ -24,4 +24,5 @@ wandb
 dragonmapper
 IPython
 pydub
+datasets
 git+https://github.com/resemble-ai/monotonic_align.git
