@@ -1,8 +1,8 @@
-log_dir: "Models/LJSpeech_ft_8s"
+log_dir: "Models/LJSpeech_ft_8s_vowel"
 save_freq: 1
 log_interval: 10
 device: "cuda"
-epochs: 5 # number of finetuning epoch (1 hour of data)
+epochs: 4 # number of finetuning epoch (1 hour of data)
 batch_size: 8
 max_len: 1200 # maximum number of frames 
 pretrained_model: "/workspace/StyleTTS2/Models/LJSpeech_ft/epoch_2nd_00029.pth"
@@ -93,7 +93,7 @@ loss_params:
     lambda_diff: 1. # score matching loss
     
     diff_epoch: 1 # style diffusion starting epoch
-    joint_epoch: 10000 # joint training starting epoch
+    joint_epoch: 2 # joint training starting epoch
 
 optimizer_params:
   lr: 0.0001 # general learning rate
