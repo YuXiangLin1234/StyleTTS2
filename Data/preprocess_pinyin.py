@@ -176,7 +176,8 @@ def save_audio_and_metadata(dataset_split, metadata_path):
 			audio = example['audio']['array']
 			sampling_rate = example['audio']['sampling_rate']
 			audio_file_path = os.path.join("/workspace/backup/starrail", example['audio']['path'])
-			# sf.write(audio_file_path, audio, sampling_rate)
+			if not os.path.exists(audio_file_path):
+				sf.write(audio_file_path, audio, sampling_rate)
 			try:
 				# Write metadata line
 				transcription = example['transcription']
