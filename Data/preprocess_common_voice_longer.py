@@ -50,67 +50,136 @@ def text_to_phonemes(text, global_phonemizer, language='cmn'):
 	# phonemes = dragonmapper.transcriptions.pinyin_to_ipa(s)
 	return phonemes
 
-def process_tsv(input_tsvs, output_file):
-	"""Process the TSV file and generate the output file in the specified format."""
 
-	# global_phonemizer = phonemizer.backend.EspeakBackend(language='cmn', preserve_punctuation=True, with_stress=True, words_mismatch='ignore')
-	with open(output_file, 'w', encoding='utf-8') as f_out:
 
-		unique_clients = set()
-		for input_tsv in input_tsvs:
-			df = pd.read_csv(input_tsv, sep='\t')
-			unique_client = df['client_id'].unique()
-			unique_clients.update(unique_client)
+
+
+
+
+
+# Common_voice in not enough longer
+# def process_tsv(input_tsvs, output_file):
+# 	"""Process the TSV file and generate the output file in the specified format."""
+
+# 	# global_phonemizer = phonemizer.backend.EspeakBackend(language='cmn', preserve_punctuation=True, with_stress=True, words_mismatch='ignore')
+# 	with open(output_file, 'w', encoding='utf-8') as f_out:
+
+# 		unique_clients = set()
+# 		for input_tsv in input_tsvs:
+# 			df = pd.read_csv(input_tsv, sep='\t')
+# 			unique_client = df['client_id'].unique()
+# 			unique_clients.update(unique_client)
 			
-		unique_clients = list(unique_clients)
-		client_id_map = {client: idx + 3000 for idx, client in enumerate(unique_clients)}
+# 		unique_clients = list(unique_clients)
+# 		client_id_map = {client: idx + 3000 for idx, client in enumerate(unique_clients)}
 
-		for input_tsv in input_tsvs:
-			df = pd.read_csv(input_tsv, sep='\t')
+# 		for input_tsv in input_tsvs:
+# 			df = pd.read_csv(input_tsv, sep='\t')
 			
-			# Create a mapping from client_id (original) to a unique integer starting from 3000
+# 			# Create a mapping from client_id (original) to a unique integer starting from 3000
 
-			for _, row in df.iterrows():
-				# Extract the necessary columns
-				filename = row['path']
-				sentence = row['sentence']
-				filename = f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}"
+# 			for _, row in df.iterrows():
+# 				# Extract the necessary columns
+# 				filename = row['path']
+# 				sentence = row['sentence']
+# 				filename = f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}"
 
-				# if "other" in input_tsv or "validated" in input_tsv:
-				audio = AudioSegment.from_file(filename)
-				duration_in_seconds = len(audio) / 1000.0
-				print(duration_in_seconds)
-				if duration_in_seconds < 8:
-					continue
+# 				# Too slow
+# 				# audio = AudioSegment.from_file(filename)
+# 				# duration_in_seconds = len(audio) / 1000.0
+# 				# print(duration_in_seconds)
+# 				# if duration_in_seconds < 8:
+# 				# 	continue
+# 				if len(sentence) < 15:
+# 					continue
 
-				client_id = client_id_map[row['client_id']]
+# 				client_id = client_id_map[row['client_id']]
 				
-				# Convert Traditional Chinese to Simplified Chinese (if needed)
-				simplified_sentence = traditional_to_simplified(sentence)
-				# try:
-				# Convert the sentence to phonemes
-				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer=None)
+# 				# Convert Traditional Chinese to Simplified Chinese (if needed)
+# 				simplified_sentence = traditional_to_simplified(sentence)
+# 				# try:
+# 				# Convert the sentence to phonemes
+# 				phonemes = text_to_phonemes(simplified_sentence, global_phonemizer=None)
 				
-				# Write to output file in the format: filename.wav|phoneme|speaker
-				print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
-				f_out.write(f"{filename}|{phonemes}|{client_id}\n")
-				# except:
-				# 	continue
+# 				# Write to output file in the format: filename.wav|phoneme|speaker
+# 				print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
+# 				f_out.write(f"{filename}|{phonemes}|{client_id}\n")
+# 				# except:
+# 				# 	continue
 
-# Example usage
-input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
-              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv",
-			  "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/invalidated.tsv",
-              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/other.tsv",
-              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/validated.tsv"]  # Replace with your input TSV file path
-output_file = 'train_list_8s.txt'  # Output file path
-process_tsv(input_tsvs, output_file)
-
-
+# # Example usage
 # input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
-            #   "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv"]  # Replace with your input TSV file path
-# output_file = 'train_list.txt'  # Output file path
+#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv",
+# 			  "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/invalidated.tsv",
+#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/other.tsv",
+#               "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/validated.tsv"]  # Replace with your input TSV file path
+# output_file = 'train_list_8s.txt'  # Output file path
+# process_tsv(input_tsvs, output_file)
 
-input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/test.tsv"]  # Replace with your input TSV file path
-output_file = 'val_list_8s.txt'  # Output file path
-process_tsv(input_tsvs, output_file)
+
+# # input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
+#             #   "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv"]  # Replace with your input TSV file path
+# # output_file = 'train_list.txt'  # Output file path
+
+# input_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/test.tsv"]  # Replace with your input TSV file path
+# output_file = 'val_list_8s.txt'  # Output file path
+# process_tsv(input_tsvs, output_file)
+
+from datasets import load_dataset, DatasetDict
+import os
+import soundfile as sf
+from tqdm import tqdm
+
+# Load the dataset
+dataset = load_dataset("simon3000/starrail-voice")
+print("dataset length", len(dataset))
+dataset = dataset.filter(lambda example: len(example['transcription']) >= 40)
+print("dataset length", len(dataset))
+dataset = dataset.filter(lambda example: "{" not in len(example['transcription']))
+print("dataset length", len(dataset))
+dataset = dataset.filter(lambda example: "}" not in len(example['transcription']))
+print("dataset length", len(dataset))
+dataset = dataset.filter(lambda example: len(example['language']) == "Chinese(PRC)")
+print("dataset length", len(dataset))
+dataset = dataset.filter(lambda example: len(example['speaker']) != "" and len(len(example['speaker'])) is not None)
+print("dataset length", len(dataset))
+
+unique_speakers = set(dataset['train']['speaker'])
+unique_speakers = list(unique_speakers)
+
+
+# Split the dataset into train and test sets (90% train, 10% test)
+train_test_split = dataset['train'].train_test_split(test_size=0.1)
+dataset = DatasetDict({
+    'train': train_test_split['train'],
+    'test': train_test_split['test']
+})
+
+# Define directory to save audio files
+output_dir = "/workspace/StyleTTS2/Data"
+os.makedirs(output_dir, exist_ok=True)
+os.makedirs("/workspace/backup/starrail", exist_ok=True)
+
+# Prepare the metadata file
+train_metadata_path = os.path.join(output_dir, "train_starrail.tsv")
+test_metadata_path = os.path.join(output_dir, "test_starrail.tsv")
+
+
+def save_audio_and_metadata(dataset_split, metadata_path):
+	with open(metadata_path, 'w', encoding='utf-8') as f:
+		for example in tqdm(dataset_split):
+			# Save audio file
+			audio = example['audio']['array']
+			sampling_rate = example['audio']['sampling_rate']
+			audio_file_path = os.path.join("/workspace/backup/starrail", f"{example['id']}.wav")
+			sf.write(audio_file_path, audio, sampling_rate)
+
+			# Write metadata line
+			transcription = example['transcription']
+			transcription = text_to_phonemes(transcription)
+	
+			speaker = example['speaker']
+			speaker_id = unique_speakers.index(speaker) + 3000
+
+			f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
+
