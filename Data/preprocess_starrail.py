@@ -130,17 +130,16 @@ dataset = load_dataset("simon3000/starrail-voice")
 print(dataset["train"][0])
 print(dataset["train"][1])
 print(dataset["train"][2])
-exit()
 print("dataset length", len(dataset["train"]))	
-dataset = dataset.filter(lambda example: len(example['language']) == "Chinese(PRC)")
+dataset = dataset.filter(lambda example: len(example['language']) != "Chinese(PRC)")
 print("dataset length", len(dataset["train"]))
-dataset = dataset.filter(lambda example: len(example['transcription']) >= 40)
+dataset = dataset.filter(lambda example: len(example['transcription']) < 40)
 print("dataset length", len(dataset["train"]))
-dataset = dataset.filter(lambda example: "{" not in len(example['transcription']))
+dataset = dataset.filter(lambda example: "{" in len(example['transcription']))
 print("dataset length", len(dataset["train"]))
-dataset = dataset.filter(lambda example: "}" not in len(example['transcription']))
+dataset = dataset.filter(lambda example: "}" in len(example['transcription']))
 print("dataset length", len(dataset["train"]))
-dataset = dataset.filter(lambda example: len(example['speaker']) != "" and len(len(example['speaker'])) is not None)
+dataset = dataset.filter(lambda example: len(example['speaker']) == "" or len(len(example['speaker'])) is None)
 print("dataset length", len(dataset["train"]))
 
 unique_speakers = set(dataset['train']['speaker'])
@@ -168,7 +167,7 @@ def save_audio_and_metadata(dataset_split, metadata_path):
 			# Save audio file
 			audio = example['audio']['array']
 			sampling_rate = example['audio']['sampling_rate']
-			audio_file_path = os.path.join("/workspace/backup/starrail", f"{example['id']}.wav")
+			audio_file_path = os.path.join("/workspace/backup/starrail", example['audio']['path'])
 			sf.write(audio_file_path, audio, sampling_rate)
 
 			# Write metadata line
