@@ -173,15 +173,18 @@ def save_audio_and_metadata(dataset_split, metadata_path):
 			sampling_rate = example['audio']['sampling_rate']
 			audio_file_path = os.path.join("/workspace/backup/starrail", example['audio']['path'])
 			sf.write(audio_file_path, audio, sampling_rate)
+			try:
+				# Write metadata line
+				transcription = example['transcription']
+				transcription = text_to_phonemes(transcription)
+		
+				speaker = example['speaker']
+				speaker_id = unique_speakers.index(speaker) + 3000
 
-			# Write metadata line
-			transcription = example['transcription']
-			transcription = text_to_phonemes(transcription)
-	
-			speaker = example['speaker']
-			speaker_id = unique_speakers.index(speaker) + 3000
+				f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
+			except: 
+				print(example['transcription'])
 
-			f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
 
 save_audio_and_metadata(dataset['train'], train_metadata_path)
 save_audio_and_metadata(dataset['test'], test_metadata_path)
