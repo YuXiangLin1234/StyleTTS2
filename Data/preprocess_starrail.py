@@ -29,7 +29,7 @@ def traditional_to_simplified(traditional_text):
 	# simplified_text = simplified_text.replace("，", ",").replace("、", ",").replace("。", ".").replace("？", "?").replace("！", "!").replace("：", ":").replace("；", ";")
 	return simplified_text
 
-def text_to_phonemes(text, global_phonemizer, language='cmn'):
+def text_to_phonemes(text, global_phonemizer=None, language='cmn'):
 	"""Convert Chinese text to phonemes using phonemizer."""
 	# phonemes = phonemize(
 	#     text,
