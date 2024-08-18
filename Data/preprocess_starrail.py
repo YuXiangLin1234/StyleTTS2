@@ -126,7 +126,12 @@ from tqdm import tqdm
 
 # Load the dataset
 dataset = load_dataset("simon3000/starrail-voice")
-print("dataset length", len(dataset["train"]))
+
+print(dataset["train"][0])
+print(dataset["train"][1])
+print(dataset["train"][2])
+exit()
+print("dataset length", len(dataset["train"]))	
 dataset = dataset.filter(lambda example: len(example['language']) == "Chinese(PRC)")
 print("dataset length", len(dataset["train"]))
 dataset = dataset.filter(lambda example: len(example['transcription']) >= 40)
