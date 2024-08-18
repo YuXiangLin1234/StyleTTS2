@@ -286,7 +286,7 @@ class TextEncoder(nn.Module):
         super().__init__()
         print("n_symbols", n_symbols)
         self.embedding = nn.Embedding(n_symbols, channels)
-        
+        exit()
         padding = (kernel_size - 1) // 2
         self.cnn = nn.ModuleList()
         for _ in range(depth):
