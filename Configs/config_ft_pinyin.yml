@@ -54,12 +54,17 @@ model_params:
       
   # speech language model config
   slm:
-      model: 'microsoft/wavlm-base-plus'
+      # model: 'microsoft/wavlm-base-plus'
+      # sr: 16000 # sampling rate of SLM
+      # hidden: 768 # hidden size of SLM
+      # nlayers: 13 # number of layers of SLM
+      # initial_channel: 64 # initial channels of SLM discriminator head
+      model: 'TencentGameMate/chinese-hubert-base'
       sr: 16000 # sampling rate of SLM
       hidden: 768 # hidden size of SLM
-      nlayers: 13 # number of layers of SLM
+      nlayers: 12 # number of layers of SLM
       initial_channel: 64 # initial channels of SLM discriminator head
-  
+   
   # style diffusion model config
   diffusion:
     embedding_mask_proba: 0.1

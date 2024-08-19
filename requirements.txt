@@ -26,4 +26,5 @@ IPython
 pydub
 datasets
 pypinyin
+mwparserfromhell
 git+https://github.com/resemble-ai/monotonic_align.git
