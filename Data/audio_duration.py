@@ -20,7 +20,7 @@ def get_total_audio_length(file_path):
 			audio = AudioSegment.from_file(audio_path)
 			total_length += len(audio) / 1000.0  # Convert length from milliseconds to seconds
 
-		user_length[data[3]] += len(audio) / 1000.0
+		user_length[data[2]] += len(audio) / 1000.0
 
 	return total_length, user_length
 
