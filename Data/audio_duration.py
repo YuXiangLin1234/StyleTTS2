@@ -28,14 +28,12 @@ def main():
 	# Example usage:
 	parser = argparse.ArgumentParser(description="Calculate the total length of audio files listed in a text file.")
 	parser.add_argument('--file', type=str, help='Path to the text file containing audio file paths')
+	args = parser.parse_args()
 	total_length, user_length = get_total_audio_length(args.file)
 	print(user_length)
 	print(f"Total length of all audio files: {total_length:.2f} seconds")
 	print(f"Total length of all audio files: {total_length / 60 / 60:.2f} hrs")
 	print(f"Total speaker: {len(user_length)}")
-
-	# Parse arguments
-	args = parser.parse_args()
      
 if __name__ == '__main__':
 	main()	
