@@ -95,6 +95,10 @@ dataset_starrail = dataset_starrail.filter(lambda example: "}" not in example['t
 print("dataset_starrail length", len(dataset_starrail))
 dataset_starrail = dataset_starrail.filter(lambda example: example['speaker'] != "" and example['speaker'] is not None)
 print("dataset_starrail length", len(dataset_starrail))
+dataset_starrail = dataset_starrail.filter(lambda example: "<" not in example['transcription'])
+print("dataset_starrail length", len(dataset_starrail))
+dataset_starrail = dataset_starrail.filter(lambda example: ">" not in example['transcription'])
+print("dataset_starrail length", len(dataset_starrail))
 
 print("dataset_genshin length", len(dataset_genshin))	
 dataset_genshin = dataset_genshin.filter(lambda example: example['language'] == "Chinese")
@@ -108,7 +112,10 @@ dataset_genshin = dataset_genshin.filter(lambda example: "}" not in example['tra
 print("dataset_genshin length", len(dataset_genshin))
 dataset_genshin = dataset_genshin.filter(lambda example: example['speaker'] != "" and example['speaker'] is not None)
 print("dataset_genshin length", len(dataset_genshin))
-
+dataset_genshin = dataset_genshin.filter(lambda example: "<" not in example['transcription'])
+print("dataset_genshin length", len(dataset_genshin))
+dataset_genshin = dataset_genshin.filter(lambda example: ">" not in example['transcription'])
+print("dataset_genshin length", len(dataset_genshin))
 
 # dataset_cv = dataset_cv.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
 # print("dataset_cv length", len(dataset_cv))
@@ -164,7 +171,7 @@ os.makedirs("/workspace/backup/ml", exist_ok=True)
 # Prepare the metadata file
 train_metadata_path = os.path.join(output_dir, "train_all_pinyin.txt")
 test_metadata_path = os.path.join(output_dir, "test_all_pinyin.txt")
-
+global_phonemizer = phonemizer.backend.EspeakBackend(language='en-us', preserve_punctuation=True)
 def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_column, speaker_column):
 	#
 	for example in tqdm(dataset_split):
@@ -177,7 +184,7 @@ def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_col
 		# try:
 		# Write metadata line
 		transcription = example[transcription_column]
-		transcription = text_to_phonemes(transcription)
+		transcription = text_to_phonemes(transcription, global_phonemizer)
 
 		if speaker_column == "hy":
 			speaker = "hy"
