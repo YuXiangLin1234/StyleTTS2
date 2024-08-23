@@ -267,9 +267,9 @@ save_audio_and_metadata(metadata_test, dataset_ml['test'], "ml", "transcription"
 
 
 
-# random.seed(531)
-# random.shuffle(metadata_train)
-# random.shuffle(metadata_test)
+random.seed(531)
+random.shuffle(metadata_train)
+random.shuffle(metadata_test)
 
 with open(train_metadata_path, 'w', encoding='utf-8') as f:
 	for line in metadata_train:
