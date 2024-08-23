@@ -17,7 +17,6 @@ def split_by_language(text):
 
     last_is_english = False
     for match in matches[1:]:
-        print(match)
         if re.match(r'[\u4e00-\u9fff]', current_segment[-1]) and re.match(r'[\u4e00-\u9fff]', match):
             current_segment += match
             last_is_english = False
