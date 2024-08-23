@@ -59,13 +59,13 @@ model_params:
       # hidden: 768 # hidden size of SLM
       # nlayers: 13 # number of layers of SLM
       # initial_channel: 64 # initial channels of SLM discriminator head
-      # model: 'TencentGameMate/chinese-hubert-base'
+      model: 'TencentGameMate/chinese-hubert-large'
       # sr: 16000 # sampling rate of SLM
       # hidden: 768 # hidden size of SLM
       # nlayers: 13 # number of layers of SLM
       # initial_channel: 64 # initial channels of SLM discriminator head
       # model: 'facebook/wav2vec2-large-xlsr-53'
-      model: 'openai/whisper-large-v3'
+      # model: 'openai/whisper-large-v3'
       sr: 16000 # sampling rate of SLM
       hidden: 768 # hidden size of SLM
       nlayers: 13 # number of layers of SLM
