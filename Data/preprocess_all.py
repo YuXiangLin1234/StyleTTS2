@@ -136,7 +136,7 @@ unique_speakers = set()
 unique_speakers.update(dataset_starrail['speaker'])
 unique_speakers.update(dataset_genshin['speaker'])
 # unique_speakers.update(set(dataset_cv['client_id']))
-unique_speakers.update("hy")
+unique_speakers.update({"hy"})
 
 for input_tsv in input_tsvs:
 	df = pd.read_csv(input_tsv, sep='\t')
@@ -241,7 +241,6 @@ def process_common_voice(meta_data, input_tsvs):
 		df = pd.read_csv(input_tsv, sep='\t')
 
 		for _, row in df.iterrows():
-			# Extract the necessary columns
 			filename = row['path']
 			sentence = row['sentence']
 
@@ -251,16 +250,10 @@ def process_common_voice(meta_data, input_tsvs):
 
 			client_id = unique_speakers.index(row['client_id'])
 			
-			# Convert Traditional Chinese to Simplified Chinese (if needed)
 			simplified_sentence = traditional_to_simplified(sentence)
-
 			phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
 			
-			# Write to output file in the format: filename.wav|phoneme|speaker
-			# print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
 			meta_data.append(f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}|{phonemes}|{client_id}\n")
-			# except:
-			# 	continue
 
 process_common_voice(metadata_train, common_voice_train_tsvs)
 process_common_voice(metadata_test, common_voice_test_tsvs)
