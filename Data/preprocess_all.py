@@ -73,8 +73,8 @@ dataset_ml = load_dataset("Evan-Lin/snr-ml2021-hungyi-corpus")['test']
 print("dataset_gen_ai length", len(dataset_gen_ai))
 dataset_gen_ai = dataset_gen_ai.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
 print("dataset_gen_ai length", len(dataset_gen_ai))
-dataset_gen_ai = dataset_gen_ai.filter(lambda example: len(example['text']) <= 100)
-print("dataset_gen_ai length", len(dataset_gen_ai))
+# dataset_gen_ai = dataset_gen_ai.filter(lambda example: len(example['text']) <= 60)
+# print("dataset_gen_ai length", len(dataset_gen_ai))
 
 print("dataset_ml length", len(dataset_ml))
 dataset_ml = dataset_ml.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
@@ -205,7 +205,7 @@ def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_col
 		# Write metadata line
 		transcription = example[transcription_column]
 		transcription = traditional_to_simplified(transcription)
-		transcription = text_to_phonemes(transcription, global_phonemizer)
+		phonemes = text_to_phonemes(transcription, global_phonemizer)
 
 		if speaker_column == "hy":
 			speaker = "hy"
@@ -213,8 +213,12 @@ def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_col
 			speaker = example[speaker_column]
 		speaker_id = unique_speakers.index(speaker) + 3000
 
+		if len(phonemes) > 500:
+			print("skip", phonemes)
+			continue
+
 		# f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
-		metadata.append(f"{audio_file_path}|{transcription}|{speaker_id}\n")
+		metadata.append(f"{audio_file_path}|{phonemes}|{speaker_id}\n")
 		# except: 
 		# 	print(example['transcription'])
 
