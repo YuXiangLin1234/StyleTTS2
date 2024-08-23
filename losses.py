@@ -194,7 +194,7 @@ class WavLMLoss(torch.nn.Module):
 
     def __init__(self, model, wd, model_sr, slm_sr=16000):
         super(WavLMLoss, self).__init__()
-        self.model_name = self.model
+        self.model_name = model
         self.wavlm = AutoModel.from_pretrained(model)
         if "whisper" in model:
             self.feature_extractor = AutoFeatureExtractor.from_pretrained(model)
