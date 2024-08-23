@@ -91,7 +91,7 @@ model_params:
 loss_params:
     lambda_mel: 5. # mel reconstruction loss
     lambda_gen: 1. # generator loss
-    lambda_slm: 1. # slm feature matching loss
+    lambda_slm: 0.1 # slm feature matching loss
     
     lambda_mono: 1. # monotonic alignment loss (TMA)
     lambda_s2s: 1. # sequence-to-sequence loss (TMA)
