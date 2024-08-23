@@ -39,7 +39,7 @@ def traditional_to_simplified(traditional_text):
 	# simplified_text = remove_punctuation(simplified_text)
 	return simplified_text
 
-def text_to_phonemes(text, global_phonemizer=None, language='cmn'):
+def text_to_phonemes(text, global_phonemizer):
 	"""Convert Chinese text to phonemes using phonemizer."""
 	
 	# Rule-based
@@ -86,7 +86,7 @@ dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['invalidated']])
 print("dataset_starrail length", len(dataset_starrail))	
 dataset_starrail = dataset_starrail.filter(lambda example: example['language'] == "Chinese(PRC)")
 print("dataset_starrail length", len(dataset_starrail))
-# dataset_starrail = dataset_starrail.filter(lambda example: len(example['transcription']) >= 12)
+
 dataset_starrail = dataset_starrail.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
 print("dataset_starrail length", len(dataset_starrail))
 dataset_starrail = dataset_starrail.filter(lambda example: "{" not in example['transcription'])
@@ -98,6 +98,8 @@ print("dataset_starrail length", len(dataset_starrail))
 dataset_starrail = dataset_starrail.filter(lambda example: "<" not in example['transcription'])
 print("dataset_starrail length", len(dataset_starrail))
 dataset_starrail = dataset_starrail.filter(lambda example: ">" not in example['transcription'])
+print("dataset_starrail length", len(dataset_starrail))
+dataset_starrail = dataset_starrail.filter(lambda example: len(example['transcription']) >= 5)
 print("dataset_starrail length", len(dataset_starrail))
 
 print("dataset_genshin length", len(dataset_genshin))	
@@ -115,6 +117,8 @@ print("dataset_genshin length", len(dataset_genshin))
 dataset_genshin = dataset_genshin.filter(lambda example: "<" not in example['transcription'])
 print("dataset_genshin length", len(dataset_genshin))
 dataset_genshin = dataset_genshin.filter(lambda example: ">" not in example['transcription'])
+print("dataset_genshin length", len(dataset_genshin))
+dataset_genshin = dataset_genshin.filter(lambda example: len(example['transcription']) >= 5)
 print("dataset_genshin length", len(dataset_genshin))
 
 # dataset_cv = dataset_cv.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
