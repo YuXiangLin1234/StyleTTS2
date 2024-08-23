@@ -148,13 +148,13 @@ for input_tsv in input_tsvs:
 unique_speakers = list(unique_speakers)
 
 # Split the dataset into train and test sets (90% train, 10% test)
-train_test_split = dataset_starrail.train_test_split(test_size=0.1)
+train_test_split = dataset_starrail.train_test_split(test_size=0.05)
 dataset_starrail = DatasetDict({
     'train': train_test_split['train'],
     'test': train_test_split['test']
 })
 
-train_test_split = dataset_genshin.train_test_split(test_size=0.1)
+train_test_split = dataset_genshin.train_test_split(test_size=0.05)
 dataset_genshin = DatasetDict({
     'train': train_test_split['train'],
     'test': train_test_split['test']
@@ -167,14 +167,14 @@ dataset_genshin = DatasetDict({
 # })
 
 
-train_test_split = dataset_gen_ai.train_test_split(test_size=0.1)
+train_test_split = dataset_gen_ai.train_test_split(test_size=0.05)
 dataset_gen_ai = DatasetDict({
     'train': train_test_split['train'],
     'test': train_test_split['test']
 })
 
 
-train_test_split = dataset_ml.train_test_split(test_size=0.1)
+train_test_split = dataset_ml.train_test_split(test_size=0.05)
 dataset_ml = DatasetDict({
     'train': train_test_split['train'],
     'test': train_test_split['test']
