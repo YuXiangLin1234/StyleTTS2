@@ -202,11 +202,13 @@ class WavLMLoss(torch.nn.Module):
         self.resample = torchaudio.transforms.Resample(model_sr, slm_sr)
      
     def forward(self, wav, y_rec):
+        device = wav.device
         with torch.no_grad():
             wav_16 = self.resample(wav)
             if "whisper" in self.model_name:
-                inputs = self.feature_extractor(wav, return_tensors="pt")
+                inputs = self.feature_extractor(wav.cpu(), return_tensors="pt")
                 input_features = inputs.input_features
+                input_features = input_features.to(device)
                 wav_embeddings = self.wavlm(input_features.squeeze(), output_hidden_states=True).hidden_states
                 # decoder_input_ids = torch.tensor([[1, 1]]) * model.config.decoder_start_token_id
                 # wav_embeddings = self.wavlm(input_features, decoder_input_ids=decoder_input_ids).last_hidden_state
@@ -214,8 +216,9 @@ class WavLMLoss(torch.nn.Module):
                 wav_embeddings = self.wavlm(input_values=wav_16, output_hidden_states=True).hidden_states
         y_rec_16 = self.resample(y_rec)
         if "whisper" in self.model_name:
-            inputs_rec = self.feature_extractor(y_rec_16, return_tensors="pt")
+            inputs_rec = self.feature_extractor(y_rec_16.cpu(), return_tensors="pt")
             input_features_rec = inputs_rec.input_features
+            input_features_rec = input_features_rec.to(device)
             y_rec_embeddings = self.wavlm(input_features_rec.squeeze(), output_hidden_states=True).hidden_states
         else:
             y_rec_embeddings = self.wavlm(input_values=y_rec_16.squeeze(), output_hidden_states=True).hidden_states
