@@ -1,6 +1,7 @@
 import re
 import string
 import os
+import random
 
 import soundfile as sf
 from datasets import DatasetDict, concatenate_datasets, load_dataset
@@ -65,7 +66,7 @@ def text_to_phonemes(text, global_phonemizer=None, language='cmn'):
 # Load the dataset
 dataset_starrail = load_dataset("simon3000/starrail-voice")['train']
 dataset_genshin = load_dataset("simon3000/genshin-voice")['train']
-dataset_cv_1 = load_dataset("mozilla-foundation/common_voice_16_0", "zh-TW")
+dataset_cv_1 = load_dataset("mozilla-foundation/common_voice_16_0", "zh-TW", trust_remote_code=True)
 dataset_gen_ai = load_dataset("voidful/gen_ai_2024")['train']
 dataset_ml = load_dataset("Evan-Lin/snr-ml2021-hungyi-corpus")['test']
 
@@ -212,6 +213,10 @@ save_audio_and_metadata(metadata_test, dataset_gen_ai['test'], "gen_ai", "text",
 
 save_audio_and_metadata(metadata_train, dataset_ml['train'], "ml", "transcription", "hy")
 save_audio_and_metadata(metadata_test, dataset_ml['test'], "ml", "transcription", "hy")
+
+random.seed(531)
+random.shuffle(metadata_train)
+random.shuffle(metadata_test)
 
 with open(train_metadata_path, 'w', encoding='utf-8') as f:
 	for line in metadata_train:
