@@ -66,7 +66,7 @@ def text_to_phonemes(text, global_phonemizer):
 # Load the dataset
 dataset_starrail = load_dataset("simon3000/starrail-voice")['train']
 dataset_genshin = load_dataset("simon3000/genshin-voice")['train']
-dataset_cv_1 = load_dataset("mozilla-foundation/common_voice_16_0", "zh-TW", trust_remote_code=True)
+# dataset_cv_1 = load_dataset("mozilla-foundation/common_voice_16_0", "zh-TW", trust_remote_code=True)
 dataset_gen_ai = load_dataset("voidful/gen_ai_2024")['train']
 dataset_ml = load_dataset("Evan-Lin/snr-ml2021-hungyi-corpus")['test']
 
@@ -78,10 +78,10 @@ print("dataset_ml length", len(dataset_ml))
 dataset_ml = dataset_ml.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
 print("dataset_ml length", len(dataset_ml))
 
-dataset_cv = concatenate_datasets([dataset_cv_1['train'], dataset_cv_1['validation']])
-dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['test']])
-dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['other']])
-dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['invalidated']])
+# dataset_cv = concatenate_datasets([dataset_cv_1['train'], dataset_cv_1['validation']])
+# dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['test']])
+# dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['other']])
+# dataset_cv = concatenate_datasets([dataset_cv, dataset_cv_1['invalidated']])
 
 print("dataset_starrail length", len(dataset_starrail))	
 dataset_starrail = dataset_starrail.filter(lambda example: example['language'] == "Chinese(PRC)")
@@ -124,11 +124,25 @@ print("dataset_genshin length", len(dataset_genshin))
 # dataset_cv = dataset_cv.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
 # print("dataset_cv length", len(dataset_cv))
 
+common_voice_train_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/train.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/dev.tsv",
+			  "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/invalidated.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/other.tsv",
+              "/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/validated.tsv"]  
+common_voice_test_tsvs = ["/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/test.tsv"] 
+input_tsvs = common_voice_train_tsvs + common_voice_test_tsvs
+
 unique_speakers = set()
 unique_speakers.update(dataset_starrail['speaker'])
 unique_speakers.update(dataset_genshin['speaker'])
-unique_speakers.update(set(dataset_cv['client_id']))
+# unique_speakers.update(set(dataset_cv['client_id']))
 unique_speakers.update("hy")
+
+for input_tsv in input_tsvs:
+	df = pd.read_csv(input_tsv, sep='\t')
+	unique_client = df['client_id'].unique()
+	unique_speakers.update(unique_client)
+
 unique_speakers = list(unique_speakers)
 
 # Split the dataset into train and test sets (90% train, 10% test)
@@ -144,11 +158,11 @@ dataset_genshin = DatasetDict({
     'test': train_test_split['test']
 })
 
-train_test_split = dataset_cv.train_test_split(test_size=0.1)
-dataset_cv = DatasetDict({
-    'train': train_test_split['train'],
-    'test': train_test_split['test']
-})
+# train_test_split = dataset_cv.train_test_split(test_size=0.1)
+# dataset_cv = DatasetDict({
+#     'train': train_test_split['train'],
+#     'test': train_test_split['test']
+# })
 
 
 train_test_split = dataset_gen_ai.train_test_split(test_size=0.1)
@@ -188,6 +202,7 @@ def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_col
 		# try:
 		# Write metadata line
 		transcription = example[transcription_column]
+		transcription = traditional_to_simplified(transcription)
 		transcription = text_to_phonemes(transcription, global_phonemizer)
 
 		if speaker_column == "hy":
@@ -211,14 +226,44 @@ save_audio_and_metadata(metadata_test, dataset_starrail['test'], "starrail", "tr
 save_audio_and_metadata(metadata_train, dataset_genshin['train'], "genshin", "transcription", "speaker")
 save_audio_and_metadata(metadata_test, dataset_genshin['test'], "genshin", "transcription", "speaker")
 
-save_audio_and_metadata(metadata_train, dataset_cv['train'], "common_voice", "sentence", "client_id")
-save_audio_and_metadata(metadata_test, dataset_cv['test'], "common_voice", "sentence", "client_id")
+# save_audio_and_metadata(metadata_train, dataset_cv['train'], "common_voice", "sentence", "client_id")
+# save_audio_and_metadata(metadata_test, dataset_cv['test'], "common_voice", "sentence", "client_id")
 
 save_audio_and_metadata(metadata_train, dataset_gen_ai['train'], "gen_ai", "text", "hy")
 save_audio_and_metadata(metadata_test, dataset_gen_ai['test'], "gen_ai", "text", "hy")
 
 save_audio_and_metadata(metadata_train, dataset_ml['train'], "ml", "transcription", "hy")
 save_audio_and_metadata(metadata_test, dataset_ml['test'], "ml", "transcription", "hy")
+
+def process_common_voice(meta_data, input_tsvs):
+
+	for input_tsv in input_tsvs:
+		df = pd.read_csv(input_tsv, sep='\t')
+
+		for _, row in df.iterrows():
+			# Extract the necessary columns
+			filename = row['path']
+			sentence = row['sentence']
+
+			# if "other" in input_tsv or "validated" in input_tsv:
+			# 	if len(sentence) < 15:
+			# 		continue
+
+			client_id = unique_speakers.index(row['client_id'])
+			
+			# Convert Traditional Chinese to Simplified Chinese (if needed)
+			simplified_sentence = traditional_to_simplified(sentence)
+
+			phonemes = text_to_phonemes(simplified_sentence, global_phonemizer)
+			
+			# Write to output file in the format: filename.wav|phoneme|speaker
+			# print(f"{input_tsv}|{filename}|{phonemes}|{client_id}\n")
+			meta_data.append(f"/workspace/backup/cv-corpus-18.0-2024-06-14/zh-TW/clips/{filename}|{phonemes}|{client_id}\n")
+			# except:
+			# 	continue
+
+process_common_voice(metadata_train, common_voice_train_tsvs)
+process_common_voice(metadata_test, common_voice_test_tsvs)
 
 random.seed(531)
 random.shuffle(metadata_train)
