@@ -206,7 +206,7 @@ class WavLMLoss(torch.nn.Module):
         with torch.no_grad():
             wav_16 = self.resample(wav)
             if "whisper" in self.model_name:
-                inputs = self.feature_extractor(wav.cpu(), return_tensors="pt")
+                inputs = self.feature_extractor(wav_16.cpu(), return_tensors="pt")
                 input_features = inputs.input_features
                 input_features = input_features.to(device)
                 wav_embeddings = self.wavlm(input_features.squeeze(), output_hidden_states=True).hidden_states
