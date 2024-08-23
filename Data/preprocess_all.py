@@ -226,21 +226,6 @@ def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_col
 metadata_train = []
 metadata_test = []
 
-save_audio_and_metadata(metadata_train, dataset_starrail['train'], "starrail", "transcription", "speaker")
-save_audio_and_metadata(metadata_test, dataset_starrail['test'], "starrail", "transcription", "speaker")
-
-save_audio_and_metadata(metadata_train, dataset_genshin['train'], "genshin", "transcription", "speaker")
-save_audio_and_metadata(metadata_test, dataset_genshin['test'], "genshin", "transcription", "speaker")
-
-# save_audio_and_metadata(metadata_train, dataset_cv['train'], "common_voice", "sentence", "client_id")
-# save_audio_and_metadata(metadata_test, dataset_cv['test'], "common_voice", "sentence", "client_id")
-
-save_audio_and_metadata(metadata_train, dataset_gen_ai['train'], "gen_ai", "text", "hy")
-save_audio_and_metadata(metadata_test, dataset_gen_ai['test'], "gen_ai", "text", "hy")
-
-save_audio_and_metadata(metadata_train, dataset_ml['train'], "ml", "transcription", "hy")
-save_audio_and_metadata(metadata_test, dataset_ml['test'], "ml", "transcription", "hy")
-
 def process_common_voice(meta_data, input_tsvs):
 
 	for input_tsv in input_tsvs:
@@ -264,9 +249,27 @@ def process_common_voice(meta_data, input_tsvs):
 process_common_voice(metadata_train, common_voice_train_tsvs)
 process_common_voice(metadata_test, common_voice_test_tsvs)
 
-random.seed(531)
-random.shuffle(metadata_train)
-random.shuffle(metadata_test)
+
+save_audio_and_metadata(metadata_train, dataset_starrail['train'], "starrail", "transcription", "speaker")
+save_audio_and_metadata(metadata_test, dataset_starrail['test'], "starrail", "transcription", "speaker")
+
+save_audio_and_metadata(metadata_train, dataset_genshin['train'], "genshin", "transcription", "speaker")
+save_audio_and_metadata(metadata_test, dataset_genshin['test'], "genshin", "transcription", "speaker")
+
+# save_audio_and_metadata(metadata_train, dataset_cv['train'], "common_voice", "sentence", "client_id")
+# save_audio_and_metadata(metadata_test, dataset_cv['test'], "common_voice", "sentence", "client_id")
+
+save_audio_and_metadata(metadata_train, dataset_gen_ai['train'], "gen_ai", "text", "hy")
+save_audio_and_metadata(metadata_test, dataset_gen_ai['test'], "gen_ai", "text", "hy")
+
+save_audio_and_metadata(metadata_train, dataset_ml['train'], "ml", "transcription", "hy")
+save_audio_and_metadata(metadata_test, dataset_ml['test'], "ml", "transcription", "hy")
+
+
+
+# random.seed(531)
+# random.shuffle(metadata_train)
+# random.shuffle(metadata_test)
 
 with open(train_metadata_path, 'w', encoding='utf-8') as f:
 	for line in metadata_train:
