@@ -73,6 +73,8 @@ dataset_ml = load_dataset("Evan-Lin/snr-ml2021-hungyi-corpus")['test']
 print("dataset_gen_ai length", len(dataset_gen_ai))
 dataset_gen_ai = dataset_gen_ai.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
 print("dataset_gen_ai length", len(dataset_gen_ai))
+dataset_gen_ai = dataset_gen_ai.filter(lambda example: len(example['text']) <= 100)
+print("dataset_gen_ai length", len(dataset_gen_ai))
 
 print("dataset_ml length", len(dataset_ml))
 dataset_ml = dataset_ml.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
