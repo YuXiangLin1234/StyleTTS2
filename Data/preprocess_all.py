@@ -110,14 +110,8 @@ dataset_genshin = dataset_genshin.filter(lambda example: example['speaker'] != "
 print("dataset_genshin length", len(dataset_genshin))
 
 
-dataset_cv = dataset_cv.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
-print("dataset_cv length", len(dataset_cv))
-dataset_cv = dataset_cv.filter(lambda example: "{" not in example['transcription'])
-print("dataset_cv length", len(dataset_cv))
-dataset_cv = dataset_cv.filter(lambda example: "}" not in example['transcription'])
-print("dataset_cv length", len(dataset_cv))
-dataset_cv = dataset_cv.filter(lambda example: example['speaker'] != "" and example['speaker'] is not None)
-print("dataset_cv length", len(dataset_cv))
+# dataset_cv = dataset_cv.filter(lambda example: len(example['audio']['array']) / example['audio']['sampling_rate'] >= 1.5)
+# print("dataset_cv length", len(dataset_cv))
 
 unique_speakers = set()
 unique_speakers.update(dataset_starrail['speaker'])
