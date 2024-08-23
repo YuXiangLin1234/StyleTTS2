@@ -118,6 +118,7 @@ unique_speakers.update(dataset_starrail['speaker'])
 unique_speakers.update(dataset_genshin['speaker'])
 unique_speakers.update(set(dataset_cv['client_id']))
 unique_speakers.update("hy")
+unique_speakers = list(unique_speakers)
 
 # Split the dataset into train and test sets (90% train, 10% test)
 train_test_split = dataset_starrail.train_test_split(test_size=0.1)
