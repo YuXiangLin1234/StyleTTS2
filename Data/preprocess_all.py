@@ -173,21 +173,21 @@ def save_audio_and_metadata(metadata, dataset_split, dir_path, transcription_col
 		audio_file_path = os.path.join(f"/workspace/backup/{dir_path}", example['audio']['path'])
 		if not os.path.exists(audio_file_path):
 			sf.write(audio_file_path, audio, sampling_rate)
-		try:
-			# Write metadata line
-			transcription = example[transcription_column]
-			transcription = text_to_phonemes(transcription)
-	
-			if speaker_column == "hy":
-				speaker = "hy"
-			else: 
-				speaker = example[speaker_column]
-			speaker_id = unique_speakers.index(speaker) + 3000
+		# try:
+		# Write metadata line
+		transcription = example[transcription_column]
+		transcription = text_to_phonemes(transcription)
 
-			# f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
-			metadata.append(f"{audio_file_path}|{transcription}|{speaker_id}\n")
-		except: 
-			print(example['transcription'])
+		if speaker_column == "hy":
+			speaker = "hy"
+		else: 
+			speaker = example[speaker_column]
+		speaker_id = unique_speakers.index(speaker) + 3000
+
+		# f.write(f"{audio_file_path}|{transcription}|{speaker_id}\n")
+		metadata.append(f"{audio_file_path}|{transcription}|{speaker_id}\n")
+		# except: 
+		# 	print(example['transcription'])
 
 
 metadata_train = []
