@@ -50,7 +50,7 @@ def text_to_phonemes(text, global_phonemizer):
 
 	for segment in segments:
 		if re.match(r'[a-zA-Z]', segment): 
-			phonemes += global_phonemizer.phonemize([text])
+			phonemes += global_phonemizer.phonemize([segment])
 		elif re.match(r'[\u4e00-\u9fff]', segment):
 			phonemes += lazy_pinyin(segment, style=Style.TONE3, neutral_tone_with_five=True, errors=fix_number)
 		elif re.match(r'\d', segment):
