@@ -130,6 +130,6 @@ def num2chinese(num, big=False, simp=True, o=False, twoalt=False):
 
 def fix_number(s):
     s = num2chinese(s)
-    return lazy_pinyin(s)
+    return lazy_pinyin(s, style=Style.TONE3, neutral_tone_with_five=True)
 
 
