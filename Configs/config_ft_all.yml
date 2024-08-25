@@ -1,10 +1,10 @@
 log_dir: "Models/LibriTTS_all"
-save_freq: 2
+save_freq: 1
 log_interval: 10
 device: "cuda"
 epochs: 8 # number of finetuning epoch (1 hour of data)
 batch_size: 24
-max_len: 900 # maximum number of frames 
+max_len: 850 # maximum number of frames 
 pretrained_model: "/workspace/StyleTTS2-LibriTTS/Models/LibriTTS/epochs_2nd_00020.pth"
 second_stage_load_pretrained: true # set to true if the pre-trained model is for 2nd stage
 load_only_params: true # set to true if do not want to load epoch numbers and optimizer parameters
@@ -103,8 +103,8 @@ loss_params:
     lambda_sty: 1. # style reconstruction loss
     lambda_diff: 1. # score matching loss
     
-    diff_epoch: 2 # style diffusion starting epoch
-    joint_epoch: 4 # joint training starting epoch
+    diff_epoch: 1 # style diffusion starting epoch
+    joint_epoch: 2 # joint training starting epoch
 
 optimizer_params:
   lr: 0.0001 # general learning rate
