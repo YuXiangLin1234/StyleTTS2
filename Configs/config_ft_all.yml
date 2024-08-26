@@ -59,7 +59,8 @@ model_params:
       # hidden: 768 # hidden size of SLM
       # nlayers: 13 # number of layers of SLM
       # initial_channel: 64 # initial channels of SLM discriminator head
-      model: 'facebook/wav2vec2-xls-r-300m'
+      # model: 'facebook/wav2vec2-xls-r-300m'
+      model: 'TencentGameMate/chinese-hubert-base'
       # sr: 16000 # sampling rate of SLM
       # hidden: 768 # hidden size of SLM
       # nlayers: 13 # number of layers of SLM
@@ -104,7 +105,7 @@ loss_params:
     lambda_diff: 1. # score matching loss
     
     diff_epoch: 1 # style diffusion starting epoch
-    joint_epoch: 2 # joint training starting epoch
+    joint_epoch: 1 # joint training starting epoch
 
 optimizer_params:
   lr: 0.0001 # general learning rate
